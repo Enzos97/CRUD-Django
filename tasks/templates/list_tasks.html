@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRUD</title>
+    <link rel="stylesheet" href="	https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css">
+</head>
+
+<body class='bg-dark'>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 offset-md-4">
+                <h1 class="display-4 text-white">Tasks List</h1>
+
+                <form action="{% url 'create_tasks' %}" method="POST" class="card card-body bg-secondary mb-2">
+                    {% csrf_token %}
+                    <input type="text" name="title" placeholder="Write a title" class="form-control mb-2">
+                    <textarea name="description" cols="30" rows="3" placeholder="Write a description" class="form-control mb-2"></textarea>
+                    <button class="btn btn-primary m-1">Save</button>
+                </form>
+                {% for task in tasks %}
+                <div class="card d-flex flex-row justify-content-between mb-2">
+                    <div>
+                        <h4 class="card-title text-black m-2">{{task.tittle}}</h4>
+                        <p class="card-text text-black m-2">{{task.description}}</p>
+                    </div>
+                    <form action="{% url 'update_tasks' task.id %}" method="UPDATE">
+                        <button class="btn btn-info m-1">Edit</button>
+                    </form>
+                    <form action="{% url 'delete_tasks' task.id %}" method="DELETE">
+                        <button class="btn btn-danger m-1">Delete</button>
+                    </form>
+                </div>
+                {% empty %}
+                <h2 class="text-center">No tasks yet</h2>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
